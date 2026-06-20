@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hover Dictionary</title>
   <style>
     body {
-      width: 280px;
+      width: 320px;
       padding: 20px;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,39 +21,179 @@
       font-size: 17px;
       font-weight: 600;
       color: #333;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       text-align: center;
     }
-    .usage {
+    .section {
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
       font-size: 13px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      background: white;
+      cursor: pointer;
+    }
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .status {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .status.success {
+      color: #28a745;
+    }
+    .status.error {
+      color: #dc3545;
+    }
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin: 16px 0;
+    }
+    .usage {
+      font-size: 12px;
       color: #666;
       line-height: 1.6;
     }
     .usage li {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .tip {
       margin-top: 12px;
       padding: 10px;
       background: #f8f9fa;
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 11px;
       color: #888;
+    }
+    .api-note {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .config-section {
+      display: none;
+    }
+    .config-section.active {
+      display: block;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h3>Hover Dictionary</h3>
-    <ul class="usage">
-      <li><strong>1.</strong> Select any word on a webpage</li>
-      <li><strong>2.</strong> A popup window will appear</li>
-      <li><strong>3.</strong> Click "Get Definition" to see meaning</li>
-      <li><strong>4.</strong> Drag the window anywhere</li>
-    </ul>
+    
+    <div class="section">
+      <div class="section-title">AI Provider</div>
+      <select id="providerSelect">
+        <option value="none">None (Use Free Dictionary)</option>
+        <option value="openai">OpenAI (GPT)</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="mimo">MIMO API</option>
+        <option value="custom">Custom API</option>
+      </select>
+    </div>
+    
+    <div id="openaiConfig" class="config-section">
+      <div class="section-title">OpenAI API Key</div>
+      <div class="api-note">Enter your OpenAI API Key (sk-...)</div>
+      <input type="password" id="openaiKey" placeholder="sk-...">
+      <div class="section-title">Model</div>
+      <select id="openaiModel">
+        <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+        <option value="gpt-4">GPT-4</option>
+        <option value="gpt-4-turbo">GPT-4 Turbo</option>
+      </select>
+    </div>
+    
+    <div id="deepseekConfig" class="config-section">
+      <div class="section-title">DeepSeek API Key</div>
+      <div class="api-note">Enter your DeepSeek API Key</div>
+      <input type="password" id="deepseekKey" placeholder="DeepSeek API Key">
+      <div class="section-title">Model</div>
+      <select id="deepseekModel">
+        <option value="deepseek-chat">DeepSeek Chat</option>
+        <option value="deepseek-coder">DeepSeek Coder</option>
+      </select>
+    </div>
+    
+    <div id="mimoConfig" class="config-section">
+      <div class="section-title">MIMO API Key</div>
+      <div class="api-note">Enter your Xiaomi MIMO API Key</div>
+      <input type="password" id="mimoKey" placeholder="MIMO API Key">
+    </div>
+    
+    <div id="customConfig" class="config-section">
+      <div class="section-title">Custom API Endpoint</div>
+      <div class="api-note">Configure your own AI API endpoint</div>
+      <input type="text" id="customEndpoint" placeholder="https://api.example.com/v1/chat/completions">
+      <div class="section-title">API Key</div>
+      <input type="password" id="customKey" placeholder="Your API Key">
+      <div class="section-title">Model Name</div>
+      <input type="text" id="customModel" placeholder="model-name">
+    </div>
+    
+    <button id="saveBtn">Save Configuration</button>
+    <div id="status" class="status"></div>
+    
+    <div class="divider"></div>
+    
+    <div class="section">
+      <div class="section-title">How to Use</div>
+      <ul class="usage">
+        <li><strong>1.</strong> Select any word on a webpage</li>
+        <li><strong>2.</strong> A popup will appear</li>
+        <li><strong>3.</strong> Click "Get Definition"</li>
+      </ul>
+    </div>
+    
     <div class="tip">
-      ?? Tip: Click outside to close the popup
+      💡 Tip: Click outside to close the popup
     </div>
   </div>
+  
+  <script src="popup.js"></script>
 </body>
 </html>

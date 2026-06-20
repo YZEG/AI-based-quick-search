@@ -2,26 +2,25 @@
   "manifest_version": 3,
   "name": "Hover Dictionary",
   "version": "1.0.0",
-  "description": "Show word definition near selected text",
-  "permissions": [
-    "contextMenus",
-    "activeTab",
-    "scripting",
-    "storage"
+  "description": "Show word definition near selected text with AI support",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "https://api.dictionaryapi.dev/*",
+    "https://en.wikipedia.org/*",
+    "https://api.mimomiao.cc/*",
+    "https://api.openai.com/*",
+    "https://api.deepseek.com/*",
+    "<all_urls>"
   ],
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ],
-      "css": [
-        "content.css"
-      ]
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
