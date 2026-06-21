@@ -15,7 +15,7 @@
    - Chrome：`chrome://extensions/`
    - Edge：`edge://extensions/`
 2. 开启右上角的**开发者模式**
-3. 点击「加载已解压的扩展程序」，选择 `free-extension` 文件夹
+3. 点击「加载已解压的扩展程序」，选择 `Definition of floating window` 文件夹
 
 ## 使用方法
 
