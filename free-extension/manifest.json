@@ -5,12 +5,9 @@
   "description": "Show word definition near selected text with AI support",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": [
+    "https://api.xiaomimimo.com/*",
     "https://api.dictionaryapi.dev/*",
-    "https://en.wikipedia.org/*",
-    "https://api.mimomiao.cc/*",
-    "https://api.openai.com/*",
-    "https://api.deepseek.com/*",
-    "<all_urls>"
+    "https://*.wikipedia.org/*"
   ],
   "content_scripts": [
     {
@@ -20,6 +17,14 @@
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "commands": {
+    "show-popup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D"
+      },
+      "description": "Show definition popup for selected text"
+    }
   },
   "action": {
     "default_popup": "popup.html",
