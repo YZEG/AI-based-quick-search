@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover Dictionary</title>
+  <style>
+    body {
+      width: 320px;
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: transparent;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+    }
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .status {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .status.success {
+      color: #28a745;
+    }
+    .status.error {
+      color: #dc3545;
+    }
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin: 16px 0;
+    }
+    .usage {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .usage li {
+      margin-bottom: 6px;
+    }
+    .tip {
+      margin-top: 12px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #888;
+    }
+    .api-note {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>Hover Dictionary</h3>
+
+    <div class="section">
+      <label style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(135deg,#667eea15,#764ba215);border:1px solid #667eea40;border-radius:8px;cursor:pointer;margin-bottom:10px;">
+        <span style="font-size:13px;font-weight:600;color:#333;white-space:nowrap;">Free Mode (No API Key)</span>
+        <input type="checkbox" id="freeMode" style="width:18px;height:18px;accent-color:#667eea;margin:0;cursor:pointer;">
+      </label>
+      <div class="api-note" id="freeModeNote" style="display:none;color:#28a745;">Using Free Dictionary + Wikipedia</div>
+    </div>
+
+    <div id="apiKeySection">
+      <div class="section-title">MIMO API Key</div>
+      <div class="api-note">Enter your Xiaomi MiMo API Key</div>
+      <input type="password" id="mimoKey" placeholder="sk-...">
+    </div>
+
+    <button id="saveBtn">Save Configuration</button>
+    <div id="status" class="status"></div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-title">How to Use</div>
+      <ul class="usage">
+        <li><strong>1.</strong> Select text on a webpage</li>
+        <li><strong>2.</strong> Press <strong>Ctrl+Shift+D</strong></li>
+        <li><strong>3.</strong> Click "Get Definition"</li>
+      </ul>
+    </div>
+
+    <div class="tip">
+      Click outside to close the popup
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
